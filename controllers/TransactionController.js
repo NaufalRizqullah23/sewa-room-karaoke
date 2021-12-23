@@ -32,9 +32,6 @@ export const transaction_controller = {
 //add a Transaction
     addTransaction : async(req,res) =>{
     try{
-        // const transaction = new Transaction(req.body)
-        // const transactionSave = await transaction.save()
-        // res.status(201).json(transactionSave)
         await TransactionDetail.insertMany(req.body.TransactionDetail).then(async(items) =>{
         const transactionId = []
         items.map((item) => {
@@ -43,9 +40,9 @@ export const transaction_controller = {
         const transaction = new Transaction({
             transaction_id: req.body.transaction_id,
             transaction_date: new Date(),
-            total_price: req.body.total_price,
             customer: req.body.customer,
-            transactionDetail : transactionId
+            transactionDetail : transactionId,
+            total_price: req.body.total_price
         })
         await transaction.save()
         res.status(201).json({message:"Add transaction successful",data: transaction})
