@@ -4,7 +4,7 @@ export const transactionDetail_controller = {
 //display all TransactionDetail
     getTransactionDetail : async(req,res) => {
     try{
-        const transactionDetail = await TransactionDetail.find()
+        const transactionDetail = await TransactionDetail.find().populate('room')
         res.json(transactionDetail)
     } catch(error){
         res.status(500).json({message:error})
@@ -15,7 +15,7 @@ export const transactionDetail_controller = {
     getTransactionDetailById : async(req,res) =>{
     try{
         const id = req.params.id
-        const spec_transactionDetail = await TransactionDetail.findById(id)
+        const spec_transactionDetail = await TransactionDetail.findById(id).populate('room')
         res.json(spec_transactionDetail)
     } catch(error){
         res.status(500).json({message:error})

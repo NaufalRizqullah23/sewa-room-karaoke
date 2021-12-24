@@ -22,7 +22,13 @@ export const transaction_controller = {
     getTransactionById : async(req,res) =>{
     try{
         const id = req.params.id
-        const spec_transaction = await Transaction.findById(id)
+        const spec_transaction = await Transaction.findById(id).populate('customer').populate({
+            path : 'transactionDetail',
+            populate : {
+                path : 'room',
+                model : 'Room'
+            }
+        })
         res.json(spec_transaction)
     } catch(error){
         res.status(500).json({message:error})
